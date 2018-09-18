@@ -1,6 +1,15 @@
 /**
  * NAMESPACES
  */
+declare namespace JMAP_API_OPTIONS {
+  namespace application {
+    const start: boolean
+    const containerId: string
+  }
+  namespace server {
+    const baseUrl: string
+  }
+}
 
 declare namespace JMAP_API {
   namespace Data {

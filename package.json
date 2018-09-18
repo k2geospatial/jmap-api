@@ -1,0 +1,26 @@
+{
+  "name": "@types/jmap-api",
+  "version": "1.0.0",
+  "description": "JMAP_API typescript extension files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k2geospatial/jmap-api.git"
+  },
+  "keywords": [
+    "k2",
+    "geospatial",
+    "jmap",
+    "jmap-api",
+    "api"
+  ],
+  "author": "K2Geospatial",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/k2geospatial/jmap-api/issues"
+  },
+  "homepage": "https://github.com/k2geospatial/jmap-api#readme"
+}

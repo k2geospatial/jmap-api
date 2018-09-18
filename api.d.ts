@@ -1,15 +1,6 @@
 /**
- * NAMESPACES
+ * NAMESPACE
  */
-declare namespace JMAP_API_OPTIONS {
-  namespace application {
-    const start: boolean
-    const containerId: string
-  }
-  namespace server {
-    const baseUrl: string
-  }
-}
 
 declare namespace JMAP_API {
   namespace Data {
@@ -19,22 +10,47 @@ declare namespace JMAP_API {
     function getBaseUrl(): string
   }
   namespace Extensions {
-    function register(options: IExtensionInitData): void
+    function register(options: JAPIExtension): void
   }
 }
 
 /**
- * INTERFACES
+ * OBJECT
  */
 
-declare interface IExtensionInitData {
+declare interface Window {
+  JMAP_API_OPTIONS?: JAPIOptions
+}
+
+/**
+ * INTERFACE
+ */
+
+interface JAPIOptions {
+  application?: {
+    start: boolean
+    containerId: string
+  },
+  server?: {
+    baseUrl?: string
+  }
+}
+
+// JMAP API extension model
+declare interface JAPIExtension {
   id: string
   initFn: (options: any) => void
   storeReducer?: (reducerState: any, action: Action) => any
   serviceToExpose?: any
-  renderMouseOver?(layerId: string, elementId: string): string
+  renderMouseOver?(layerId: string, elementId: string): ExtensionMouseOver
 }
 
+declare interface ExtensionMouseOver {
+  html: string
+  js?: string   // javascript that will be evaluated after html rendered
+}
+
+// Redux action
 declare interface Action {
   [ key: string ]: any
   type: string

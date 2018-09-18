@@ -3,21 +3,24 @@
 declare namespace JMAP_API {
   namespace Extensions {
     namespace Document { // specific to this extension
-      function selectElements(selectedElements: IObjectId[]): Promise<IDocumentDescriptor[]>
-      function filter(filterValue: string): void
-      function loadIcon(layerId: string, elementId: string): void
+      function selectElements(selectedElements: ObjectId[]): void
+      function filter(filterValue: string | undefined): void
+      function createDocumentIcon(layerId: string, elementId: string): void
+      function displayElementDocuments(layerId: string, elementId: string): void
     }
   }
 }
 
-declare interface IObjectId {
+declare interface ObjectId {
+  project: number
   layer: number
   element: number
 }
 
-declare interface IDocumentDescriptor {
+declare interface DocumentDescriptor {
   id: string
   title: string
   description: string
-  objectIds: IObjectId[]
+  objectIds: ObjectId[]
 }
+

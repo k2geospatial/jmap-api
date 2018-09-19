@@ -1,57 +1,49 @@
-/**
- * NAMESPACE
- */
-
+//type JObjectId 
 declare namespace JMAP_API {
+  namespace Extensions {
+    namespace Document {
+      const ui_controller: any // @Deprecated
+      //function selectElement(toSelectedObjectId: JObjectId): Promise<JDocumentDescriptor[]>
+      //function selectElements(toSelectedObjectIds: JObjectId[]): Promise<JDocumentDescriptor[]>
+      function filter(filterValue: string | undefined): void
+    }
+    function register(extensionModel: any): void
+    function isRegistered(extensionId: string): boolean
+    function isValidExtension(extensionId: string): boolean
+    //function renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
+  }
   namespace Data {
-    const Store: any
+    const Store: any|undefined
+    namespace Getters {
+      function getUserLocale(): string
+      function getUserToken(): string
+      //function getUserIdentity(): JUserIdentity
+      function getUserLogin(): string
+    }
+  }
+  namespace Application {
+    const ContainerId: string
+    const Instance: React.Component<any, React.ComponentState> | Element | void
+    //function start(containerId?: string, initOptions?: JAPIApplicationOptions): void
+  }
+  namespace Components {
+    //const UserSession: JAPIComponent<UserSession>
+  }
+  namespace Services {
+    namespace User {
+      //function login(login: string, password: string): Promise<JLoginData>
+      function logout(): Promise<void>
+    }
   }
   namespace Config {
+    function startApplicationAtStartup(): boolean
+    function getApplicationContainerId(): string
     function getBaseUrl(): string
-  }
-  namespace Extensions {
-    function register(options: JAPIExtension): void
+    //function getOldJmapConfig(): JAPIConfigOldJmap // DEPRECATED
   }
 }
-
-/**
- * OBJECT
- */
 
 declare interface Window {
-  JMAP_API_OPTIONS?: JAPIOptions
-}
-
-/**
- * INTERFACE
- */
-
-interface JAPIOptions {
-  application?: {
-    start: boolean
-    containerId: string
-  },
-  server?: {
-    baseUrl?: string
-  }
-}
-
-// JMAP API extension model
-declare interface JAPIExtension {
-  id: string
-  initFn: (options: any) => void
-  storeReducer?: (reducerState: any, action: Action) => any
-  serviceToExpose?: any
-  renderMouseOver?(layerId: string, elementId: string): ExtensionMouseOver
-}
-
-declare interface ExtensionMouseOver {
-  html: string
-  js?: string   // javascript that will be evaluated after html rendered
-}
-
-// Redux action
-declare interface Action {
-  [ key: string ]: any
-  type: string
+  JMAP_API_OPTIONS?: any //JAPIOptions
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
 }

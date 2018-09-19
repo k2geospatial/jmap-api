@@ -1,5 +1,5 @@
 {
-  "name": "jmap-types",
+  "name": "jmap-api",
   "version": "0.1.1",
   "description": "JMAP_API typescript extension files",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/k2geospatial/jmap-types.git"
+    "url": "git+https://github.com/k2geospatial/jmap-api.git"
   },
   "keywords": [
     "k2",
@@ -21,7 +21,14 @@
   "author": "K2Geospatial",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/k2geospatial/jmap-types/issues"
+    "url": "https://github.com/k2geospatial/jmap-api/issues"
   },
-  "homepage": "https://github.com/k2geospatial/jmap-types#readme"
+  "homepage": "https://github.com/k2geospatial/jmap-api#readme",
+  "devDependencies": {
+    "@types/react": "^16.4.14",
+    "@types/redux": "^3.6.0"
+  },
+  "dependencies": {
+    "redux": "^4.0.0"
+  }
 }

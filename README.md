@@ -15,10 +15,10 @@ For k2 develeopers, if you need to change this API, make all your changes and wh
 
 For JMap API consumers who wrote their project in Typescript, you can simply use it via NPM package repository : 
 
-  #npm i jmap-api -D
+  # npm i jmap-api -D
 
 Like that you will be able to use the API like "JMAP_API.Services.User.logout()" in your code, and benefit from Typescript static typing.
 
 API mapping versions :
 
-  #JMap 7 Funafuti <=> jmap-api v0.0.1
+  # JMap 7 Funafuti <=> jmap-api v0.0.1

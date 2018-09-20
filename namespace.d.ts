@@ -4,18 +4,24 @@
 // This is the API contract, if changed it has impact on customers
 
 declare namespace JMAP_API {
-  namespace Extensions {
-    namespace Document {
-      const ui_controller: any // @Deprecated
-      function selectElement(toSelectedObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-      function selectElements(toSelectedObjectIds: JObjectId[]): Promise<JDocumentDescriptor[]>
-      function filter(filterValue: string | undefined): void
-    }
-    function register(extensionModel: any): void
-    function isRegistered(extensionId: string): boolean
-    function isValidExtension(extensionId: string): boolean
-    function renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
+
+  // JMAP_API.Config : provide getters to explore API settings
+  namespace Config {
+    function startApplicationAtStartup(): boolean
+    function getApplicationContainerId(): string
+    function getBaseUrl(): string
+    function getOldJmapConfig(): any // @Deprecated
   }
+
+  // JMAP_API.Services : expose API services
+  namespace Services {
+    namespace User {
+      function login(login: string, password: string): Promise<JLoginData>
+      function logout(): Promise<void>
+    }
+  }
+
+  // JMAP_API.Data : Provide redux store used by api, and also getters to easy access data
   namespace Data {
     const Store: any|undefined
     namespace Getters {
@@ -25,30 +31,40 @@ declare namespace JMAP_API {
       function getUserLogin(): string
     }
   }
+
+  // JMAP_API.Components : provide a way to start ui components by your own in the DOM container of your choice
+  namespace Components {
+    // JMAP_API.Components.UserSession : user session management panel
+    const UserSession: JAPIComponent<JUserSessionCmp>
+  }
+
+  // JMAP_API.Application : JMap application instance management (not started by default)
   namespace Application {
     const ContainerId: string
     const Instance: React.Component<any, React.ComponentState> | Element | void
     function start(containerId?: string, initOptions?: JAPIApplicationOptions): void
   }
-  namespace Components {
-    const UserSession: JAPIComponent<JUserSessionCmp>
-  }
-  namespace Services {
-    namespace User {
-      function login(login: string, password: string): Promise<JLoginData>
-      function logout(): Promise<void>
+
+  // JMAP_API.Extensions : provide an api to register dynamically an extension
+  namespace Extensions {
+    function register(extensionModel: any): void
+    // TODO function registered(): string[]
+    function isRegistered(extensionId: string): boolean // ex : JMAP_API.Extensions.isRegistered('Document')
+    function isValidExtension(extensionId: string): boolean
+    function renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
+
+    // JMAP_API.Extensions.Document : @Optional
+    namespace Document {
+      const ui_controller: any // @Deprecated
+      function selectElement(toSelectedObjectId: JObjectId): Promise<JDocumentDescriptor[]>
+      function selectElements(toSelectedObjectIds: JObjectId[]): Promise<JDocumentDescriptor[]>
+      function filter(filterValue: string | undefined): void
     }
-  }
-  namespace Config {
-    function startApplicationAtStartup(): boolean
-    function getApplicationContainerId(): string
-    function getBaseUrl(): string
-    function getOldJmapConfig(): any // @Deprecated
   }
 }
 
 declare interface Window {
-  JMAP_API_OPTIONS?: any //JAPIOptions
+  JMAP_API_OPTIONS?: any // TODO JAPIOptions
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
 }
 

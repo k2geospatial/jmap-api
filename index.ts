@@ -150,10 +150,12 @@ export interface JDocumentService {
 }
 
 export interface JDocumentDescriptor {
-  id: string
+  identifier: number
   title: string
   description: string
-  objectIds: JObjectId[]
+  fileName: string
+  creation: number // timestamp
+  depositName: string
 }
 
 // MIS

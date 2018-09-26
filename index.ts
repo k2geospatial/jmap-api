@@ -25,6 +25,7 @@ export interface JAPIData {
 }
 
 export interface JStoreGetter {
+  getProjectId(): string
   getUserLocale(): string
   getUserToken(): string
   getUserIdentity(): JUserIdentity
@@ -32,8 +33,13 @@ export interface JStoreGetter {
 }
 
 export interface JAPIState {
+  project: JProjectState
   user: JUserState
   external?: any
+}
+
+export interface JProjectState {
+  id: string
 }
 
 // API DATA -> USER
@@ -76,11 +82,19 @@ export interface JAPIConfigOldJmap {
 
 // API SERVICE
 export interface JAPIService {
+  Project: JProjectService
   User: JUserService
+}
+
+// API SERVICE -> PROJECT
+export interface JProjectService {
+  setId(projectId: string): void
+  getId(): string
 }
 
 // API SERVICE -> USER
 export interface JUserService {
+  setToken(token: string): void
   login(login: string, password: string): Promise<JLoginData>
   logout(): Promise<void>
 }
@@ -144,8 +158,9 @@ export interface JDocumentServiceUiController {
 
 export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
-  selectElement(toSelectedObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-  selectElements(toSelectedObjectIds: JObjectId[]): Promise<JDocumentDescriptor[]>
+  selectElement(layer: string, element: string): Promise<void>
+  getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
+  selectDocuments(documents: JDocumentDescriptor[]): void
   filter(filterValue: string | undefined): void
 }
 
@@ -160,9 +175,9 @@ export interface JDocumentDescriptor {
 
 // MIS
 export interface JObjectId {
-  project: number
-  layer: number
-  element: number
+  project: string
+  layer: string
+  element: string
 }
 
 // TODO

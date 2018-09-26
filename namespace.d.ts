@@ -15,7 +15,12 @@ declare namespace JMAP_API {
 
   // JMAP_API.Services : expose API services
   namespace Services {
+    namespace Project {
+      function setId(projectId: string): void
+      function getId(): string
+    }
     namespace User {
+      function setToken(token: string): void
       function login(login: string, password: string): Promise<JLoginData>
       function logout(): Promise<void>
     }
@@ -25,6 +30,7 @@ declare namespace JMAP_API {
   namespace Data {
     const Store: any|undefined
     namespace Getters {
+      function getProjectId(): string
       function getUserLocale(): string
       function getUserToken(): string
       function getUserIdentity(): JUserIdentity
@@ -56,8 +62,9 @@ declare namespace JMAP_API {
     // JMAP_API.Extensions.Document : @Optional
     namespace Document {
       const ui_controller: any // @Deprecated
-      function selectElement(toSelectedObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-      function selectElements(toSelectedObjectIds: JObjectId[]): Promise<JDocumentDescriptor[]>
+      function selectElement(layer: string, element: string): Promise<void>
+      function getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
+      function selectDocuments(documents: JDocumentDescriptor[]): void
       function filter(filterValue: string | undefined): void
     }
   }
@@ -69,10 +76,12 @@ declare interface Window {
 }
 
 interface JDocumentDescriptor {
-  id: string
+  identifier: number
   title: string
   description: string
-  objectIds: JObjectId[]
+  fileName: string
+  creation: number // timestamp
+  depositName: string
 }
 
 interface JExtensionMouseOver {
@@ -81,9 +90,9 @@ interface JExtensionMouseOver {
 }
 
 interface JObjectId {
-  project: number
-  layer: number
-  element: number
+  project: string
+  layer: string
+  element: string
 }
 
 interface JUserIdentity {

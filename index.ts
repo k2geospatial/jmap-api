@@ -2,12 +2,19 @@ import { Action, Store } from "redux"
 
 // API
 export interface JAPI {
+  Language: JAPILanguage
   Extensions: JAPIExtention
   Data: JAPIData
   Application: JAPIApplication
   Components: JAPIComponents
   Services: JAPIService
   Config: JAPIConfig
+}
+
+// API LANGUAGE
+export interface JAPILanguage {
+  getLocale(): string
+  translate(key: string, params?: string|string[], locale?: string): string
 }
 
 // API OPTIONS

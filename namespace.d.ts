@@ -13,6 +13,12 @@ declare namespace JMAP_API {
     function getOldJmapConfig(): any // @Deprecated
   }
 
+  // JMAP_API.Language : all about JMAP API translations
+  namespace Language {
+    function getLocale(): string // EN (default), FR, ES, or PT
+    function translate(key: string, params?: string|string[], locale?: string): string
+  }
+
   // JMAP_API.Services : expose API services
   namespace Services {
     namespace Project {

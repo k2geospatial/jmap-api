@@ -14,6 +14,7 @@ export interface JAPI {
 // API LANGUAGE
 export interface JAPILanguage {
   getLocale(): string
+  setLocale(locale: string): void
   translate(key: string, params?: string|string[], locale?: string): string
 }
 

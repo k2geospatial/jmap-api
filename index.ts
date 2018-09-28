@@ -14,7 +14,7 @@ export interface JAPI {
 // API LANGUAGE
 export interface JAPILanguage {
   getLocale(): string
-  setLocale(locale: string): void
+  setLocale(locale: string): void // @Deprecated
   translate(key: string, params?: string|string[], locale?: string): string
 }
 
@@ -79,7 +79,6 @@ export interface JAPIApplicationOptions {
 export interface JAPIConfig {
   startApplicationAtStartup(): boolean
   getApplicationContainerId(): string
-  getBaseUrl(): string
   getOldJmapConfig(): JAPIConfigOldJmap // @Deprecated
 }
 

@@ -9,7 +9,6 @@ declare namespace JMAP_API {
   namespace Config {
     function startApplicationAtStartup(): boolean
     function getApplicationContainerId(): string
-    function getBaseUrl(): string
     function getOldJmapConfig(): any // @Deprecated
   }
 

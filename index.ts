@@ -141,7 +141,7 @@ export interface JAPIExtention {
   register(extensionModel: JExtensionModel): void
   isRegistered(extensionId: string): boolean
   isValidExtension(extensionId: string): boolean
-  renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
+  renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[] // @Deprecated
 }
 
 export interface JExtensionModel {

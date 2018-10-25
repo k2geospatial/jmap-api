@@ -58,8 +58,8 @@ declare namespace JMAP_API {
 
   // JMAP_API.Extensions : provide an api to register dynamically an extension
   namespace Extensions {
-    function register(extensionModel: any): void
-    // TODO function registered(): string[]
+    function register(extensionModel: JExtensionModel): void
+    // function getAllRegistered(): string[] @TODO
     function isRegistered(extensionId: string): boolean // ex : JMAP_API.Extensions.isRegistered('Document')
     function isValidExtension(extensionId: string): boolean
     function renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
@@ -144,4 +144,12 @@ interface JUserIdentity {
   firstName: string
   lastName: string
   login: string
+}
+
+interface JExtensionModel {
+  id: string
+  initFn: (options: any) => void
+  storeReducer?: (reducerState: any, action: any) => any
+  serviceToExpose?: any
+  renderMouseOver?(layerId: string, elementId: string): JExtensionMouseOver
 }

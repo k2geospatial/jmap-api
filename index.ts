@@ -2,20 +2,11 @@ import { Action, Store } from "redux"
 
 // API
 export interface JAPI {
-  Language: JAPILanguage
-  Extensions: JAPIExtention
+  Extension: JAPIExtention
   Data: JAPIData
   Application: JAPIApplication
-  Components: JAPIComponents
-  Services: JAPIService
-  Config: JAPIConfig
-}
-
-// API LANGUAGE
-export interface JAPILanguage {
-  getLocale(): string
-  setLocale(locale: string): void // @Deprecated
-  translate(key: string, params?: string|string[], locale?: string): string
+  Component: JAPIComponent
+  Service: JAPIService
 }
 
 // API OPTIONS
@@ -28,16 +19,20 @@ export interface JAPIOptions {
 
 // API DATA
 export interface JAPIData {
-  Store: Store<JAPIState>|undefined
-  Getters: JStoreGetter
+  getStore(): Store<JAPIState>|undefined
+  Project: JStoreGetterProject
+  User: JStoreGetterUser
 }
 
-export interface JStoreGetter {
-  getProjectId(): string
-  getUserLocale(): string
-  getUserToken(): string
-  getUserIdentity(): JUserIdentity
-  getUserLogin(): string
+export interface JStoreGetterProject {
+  getId(): string
+}
+
+export interface JStoreGetterUser {
+  getLocale(): string
+  getSessionId(): string
+  getIdentity(): JUserIdentity
+  getLogin(): string
 }
 
 export interface JAPIState {
@@ -53,7 +48,7 @@ export interface JProjectState {
 // API DATA -> USER
 export interface JUserState {
   identity: JUserIdentity
-  token: string
+  sessionId: string
   locale: string
 }
 
@@ -65,8 +60,9 @@ export interface JUserIdentity {
 
 // API APPLICATION
 export interface JAPIApplication {
-  ContainerId: string
-  Instance: any
+  needToStart(): boolean
+  getDomContainerId(): string
+  getInstance(): React.Component
   start(containerId?: string, initOptions?: JAPIApplicationOptions): void
 }
 
@@ -75,33 +71,29 @@ export interface JAPIApplicationOptions {
   containerId: string
 }
 
-// API CONFIG
-export interface JAPIConfig {
-  startApplicationAtStartup(): boolean
-  getApplicationContainerId(): string
-  getOldJmapConfig(): JAPIConfigOldJmap // @Deprecated
-}
-
-// @Deprecated : will be removed when old jmap will be retired
-export interface JAPIConfigOldJmap {
-  needSplitMouseOverElementsData(): boolean
-}
 
 // API SERVICE
 export interface JAPIService {
+  Language: JAPILanguageService
   Project: JProjectService
   User: JUserService
+}
+
+// API SERVICE -> LANGUAGE
+export interface JAPILanguageService {
+  getLocale(): string
+  setLocale(locale: string): void
+  translate(key: string, params?: string|string[], locale?: string): string
 }
 
 // API SERVICE -> PROJECT
 export interface JProjectService {
   setId(projectId: string): void
-  getId(): string
 }
 
 // API SERVICE -> USER
 export interface JUserService {
-  setToken(token: string): void
+  setSessionId(token: string): void
   login(login: string, password: string): Promise<JLoginData>
   logout(): Promise<void>
 }
@@ -119,11 +111,11 @@ export interface JUserPublicData {
 }
 
 // API COMPONENTS
-export interface JAPIComponents {
-  UserSession: JAPIComponent<JUserSessionCmp>
+export interface JAPIComponent {
+  UserSession: JAPIComponentItem<JUserSessionCmp>
 }
 
-export interface JAPIComponent<C extends React.Component> {
+export interface JAPIComponentItem<C extends React.Component> {
   create(containerId: string, options: any): React.Component
   destroy(containerId: string): void
   getInstance(containerId: string): React.Component
@@ -140,8 +132,9 @@ export interface JAPIExtention {
   Document?: JDocumentService
   register(extensionModel: JExtensionModel): void
   isRegistered(extensionId: string): boolean
-  isValidExtension(extensionId: string): boolean
-  renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[] // @Deprecated
+  getAllRegistered(): string[]
+  renderMouseOver(layerId: string, elementId: string): JExtensionMouseOver[]
+  hasMouseOver(): boolean // @Deprecated should not be used in JMap Web NG
 }
 
 export interface JExtensionModel {

@@ -11,63 +11,84 @@ export interface JAPI {
 
 // API OPTIONS
 export interface JAPIOptions {
+  projectId: number,
   application?: JAPIApplicationOptions,
-  server?: {
-    baseUrl?: string
-  }
+  restBaseUrl?: string
 }
 
 // API DATA
-export interface JAPIData {
+export interface JAPIData extends JStoreGetterApi {
   getStore(): Store<JAPIState>|undefined
   App: JStoreGetterApp
   Project: JStoreGetterProject
   User: JStoreGetterUser
 }
 
+export interface JStoreGetterApi {
+  getMode(): API_MODE
+  getAllMode(): API_MODE[]
+}
+
 export interface JStoreGetterApp {
-  getMode(): APP_MODE
-  getAllMode(): APP_MODE[]
+  // TODO
 }
 
 export interface JStoreGetterProject {
-  getId(): string
+  getId(): number
+  getName(): string
+  getDescription(): string
+  getProjection(): JProjection
+  getInitialRotation(): number
+  getScaleMax(): number
+  getScaleMin(): number
+  getColorSelection(): string
+  getColorBackground(): string
+  getInitialViewBounds(): JBounds
+}
+
+export interface JStoreGetterLayer {
+  getName(layerId: number): string
+  getDescription(layerId: number): string
 }
 
 export interface JStoreGetterUser {
-  getLocale(): string
-  getSessionId(): string
-  getIdentity(): JUserIdentity
+  getSessionId(): number
+  getFirstName(): string
+  getLastName(): string
   getLogin(): string
 }
 
-export interface JAPIState {
+export interface JAPIState extends JAPIOwnState {
   app: JAppState
   project: JProjectState
+  layer: JLayerState
   user: JUserState
   external?: any
 }
 
-export interface JAppState {
-  mode: APP_MODE,
-  allMode: APP_MODE[]
+export interface JAPIOwnState {
+  mode: API_MODE,
+  allMode: API_MODE[]
 }
 
-export interface JProjectState {
-  id: string
+export interface JAppState {
+  // TODO
+}
+
+export interface JProjectState extends JProjectDescriptor {}
+
+export interface JLayerState {
+  tree: JLayerTree
+  flat: JLayerDescriptor[]
+  flat_visible: JLayerDescriptor[]
 }
 
 // API DATA -> USER
 export interface JUserState {
-  identity: JUserIdentity
-  sessionId: string
-  locale: string
-}
-
-export interface JUserIdentity {
   firstName: string
   lastName: string
   login: string
+  sessionId: number
 }
 
 // API APPLICATION
@@ -86,10 +107,21 @@ export interface JAPIApplicationOptions {
 
 // API SERVICE
 export interface JAPIService {
+  setMode(mode: API_MODE): void
+  Popup: JPopupService
   Language: JAPILanguageService
   App: JAppService
   Project: JProjectService
   User: JUserService
+}
+
+export enum API_MODE {
+  LAYER = "layer",
+  SELECT = "select",
+  TOOL = "tool",
+  DRAW = "draw",
+  SEARCH = "search",
+  ADD = "add"
 }
 
 // API SERVICE -> LANGUAGE
@@ -99,34 +131,74 @@ export interface JAPILanguageService {
   translate(key: string, params?: string|string[], locale?: string): string
 }
 
-// API SERVICE -> APP
-export enum APP_MODE {
-  LAYER = "layer",
-  SELECT = "select",
-  TOOL = "tool",
-  DRAW = "draw",
-  SEARCH = "search",
-  ADD = "add"
+// API SERVICE -> POPUP
+export interface JPopupService {
+  popInfo(message: string): void
+  popWarning(message: string): void
+  popError(message: string): void
+  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
 }
 
+// API SERVICE -> APP
 export interface JAppService {
-  setMode(mode: APP_MODE): void
+  // TODO
 }
 
 // API SERVICE -> PROJECT
+export interface JProjectDescriptor {
+  id: number
+  name: string
+  description: string
+  projection: JProjection
+  initialRotation: number
+  scaleMax: number
+  scaleMin: number
+  colorSelection: string 
+  colorBackground: string
+  initialViewBounds: JBounds
+}
+
+export interface JLayerDescriptor extends JLayerTreeElement {
+  visible: boolean
+}
+
+export type JLayerTree = Array<JLayerTreeElement>
+
+export interface JLayerTreeElement {
+  id: number,
+  name: string
+}
+
+export interface JLayerTreeNode extends JLayerTreeElement {
+  children: JLayerTreeElement[]
+}
+
+export interface JProjection {
+  code: string
+  name: string
+}
+
+export interface JBounds {
+  coord0: JPoint
+  coord1: JPoint
+  coord2: JPoint
+  coord3: JPoint
+}
+
+export type JPoint = Array<number>
+
 export interface JProjectService {
-  setId(projectId: string): void
+  initialize(project?: number): Promise<void>
 }
 
 // API SERVICE -> USER
 export interface JUserService {
-  setSessionId(token: string): void
   login(login: string, password: string): Promise<JLoginData>
   logout(): Promise<void>
 }
 
 export interface JLoginData {
-  token: string
+  sessionId: number
   user: JUserPublicData
 }
 
@@ -139,7 +211,7 @@ export interface JUserPublicData {
 
 // API COMPONENTS
 export interface JAPIComponent {
-  UserSession: JAPIComponentItem<JUserSessionCmp>
+  User: JAPIComponentItem<JUserCmp>
 }
 
 export interface JAPIComponentItem<C extends React.Component> {
@@ -148,9 +220,9 @@ export interface JAPIComponentItem<C extends React.Component> {
   getInstance(containerId: string): React.Component
 }
 
-// API COMPONENTS -> USER_SESSION CMP
-export interface JUserSessionCmp extends React.Component<JUserSessionProps, {}>{}
-export interface JUserSessionProps {
+// API COMPONENTS -> USER CMP
+export interface JUserCmp extends React.Component<JUserProps, {}>{}
+export interface JUserProps {
   user?: JUserState
 }
 
@@ -205,12 +277,4 @@ export interface JObjectId {
   project: string
   layer: string
   element: string
-}
-
-// TODO
-export interface JPopupService {
-  popInfo(message: string): void
-  popWarning(message: string): void
-  popError(message: string): void
-  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
 }

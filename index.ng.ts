@@ -48,6 +48,7 @@ export interface JStoreGetterProject {
 
 export interface JStoreGetterLayer {
   getName(layerId: number): string
+  isVisible(layerId: number): boolean
   getDescription(layerId: number): string
 }
 
@@ -71,16 +72,18 @@ export interface JAPIOwnState {
   allMode: API_MODE[]
 }
 
+// API DATA -> APP
 export interface JAppState {
   // TODO
 }
 
-export interface JProjectState extends JProjectDescriptor {}
+// API DATA -> PROJECT
+export type JProjectState = JProject
 
+// API DATA -> LAYER
 export interface JLayerState {
-  tree: JLayerTree
-  flat: JLayerDescriptor[]
-  flat_visible: JLayerDescriptor[]
+  flatHierarchy: JLayerFlatHierarchy
+  allById: { [ layerId: number ]: JLayerFlatElement }
 }
 
 // API DATA -> USER
@@ -103,7 +106,6 @@ export interface JAPIApplicationOptions {
   start: boolean
   containerId: string
 }
-
 
 // API SERVICE
 export interface JAPIService {
@@ -145,7 +147,7 @@ export interface JAppService {
 }
 
 // API SERVICE -> PROJECT
-export interface JProjectDescriptor {
+export interface JProject {
   id: number
   name: string
   description: string
@@ -158,19 +160,49 @@ export interface JProjectDescriptor {
   initialViewBounds: JBounds
 }
 
-export interface JLayerDescriptor extends JLayerTreeElement {
-  visible: boolean
+// API SERVICE -> PROJECT
+export interface JProjectService {
+  load(project?: number): Promise<void>
+  unload(): void
+  Layer: JLayerService
 }
 
-export type JLayerTree = Array<JLayerTreeElement>
+export interface JLayerService {
+  setVisible(layerId: number, visible: boolean): void
+  setGroupOpen(nodeId: number, open: boolean): void
+}
 
-export interface JLayerTreeElement {
+export enum LAYER_GEOMETRY {
+  ANNOTATION = "ANNOTATION",
+  CURVE = "CURVE",
+  COMPLEX = "COMPLEX",
+  POINT = "POINT",
+  RASTER = "RASTER",
+  SURFACE = "SURFACE",
+  ELLIPSE = "ELLIPSE",
+  NONE = "NONE"
+}
+
+export interface JLayerGeometry {
+  type: LAYER_GEOMETRY
+  editable: boolean
+}
+
+export interface JLayer extends JLayerFlatElement {
+  geometry: JLayerGeometry
+}
+
+export type JLayerFlatHierarchy = Array<JLayerFlatElement>
+
+export interface JLayerFlatElement {
   id: number,
-  name: string
-}
-
-export interface JLayerTreeNode extends JLayerTreeElement {
-  children: JLayerTreeElement[]
+  name: string,
+  initialVisibility: boolean
+  visible: boolean
+  areAllParentOpened: boolean
+  isOpen: boolean
+  isNode: boolean
+  path: string
 }
 
 export interface JProjection {
@@ -186,10 +218,6 @@ export interface JBounds {
 }
 
 export type JPoint = Array<number>
-
-export interface JProjectService {
-  initialize(project?: number): Promise<void>
-}
 
 // API SERVICE -> USER
 export interface JUserService {

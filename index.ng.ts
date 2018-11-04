@@ -82,8 +82,8 @@ export type JProjectState = JProject
 
 // API DATA -> LAYER
 export interface JLayerState {
-  flatHierarchy: JLayerFlatHierarchy
-  allById: { [ layerId: number ]: JLayerFlatElement }
+  tree: JLayerTree
+  allById: { [ layerElementId: string ]: JLayerElement }
 }
 
 // API DATA -> USER
@@ -188,22 +188,25 @@ export interface JLayerGeometry {
   editable: boolean
 }
 
-export interface JLayer extends JLayerFlatElement {
-  geometry: JLayerGeometry
-}
-
-export type JLayerFlatHierarchy = Array<JLayerFlatElement>
-
-export interface JLayerFlatElement {
+export interface JLayerElement {
   id: number,
   name: string,
   initialVisibility: boolean
   visible: boolean
-  areAllParentOpened: boolean
-  isOpen: boolean
   isNode: boolean
   path: string
 }
+
+export interface JLayer extends JLayerElement {
+  geometry: JLayerGeometry
+}
+
+export interface JLayerNode extends JLayerElement {
+  open: boolean
+  children: JLayerElement[]
+}
+
+export type JLayerTree = Array<JLayerElement>
 
 export interface JProjection {
   code: string

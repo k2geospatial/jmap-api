@@ -74,7 +74,7 @@ export interface JAPIOwnState {
 
 // API DATA -> APP
 export interface JAppState {
-  // TODO
+  sidePanelOpen: boolean
 }
 
 // API DATA -> PROJECT
@@ -100,6 +100,14 @@ export interface JAPIApplication {
   getDomContainerId(): string
   getInstance(): React.Component
   start(containerId?: string, initOptions?: JAPIApplicationOptions): void
+  SidePanel: JSidePanelController
+}
+
+// API APPLICATION -> SIDE_PANEL
+export interface JSidePanelController {
+  setVisible(open: boolean): void
+  open(): void
+  close(): void
 }
 
 export interface JAPIApplicationOptions {
@@ -112,8 +120,8 @@ export interface JAPIService {
   setMode(mode: API_MODE): void
   Popup: JPopupService
   Language: JAPILanguageService
-  App: JAppService
   Project: JProjectService
+  Layer: JLayerService
   User: JUserService
 }
 
@@ -141,11 +149,6 @@ export interface JPopupService {
   popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
 }
 
-// API SERVICE -> APP
-export interface JAppService {
-  // TODO
-}
-
 // API SERVICE -> PROJECT
 export interface JProject {
   id: number
@@ -164,7 +167,6 @@ export interface JProject {
 export interface JProjectService {
   load(project?: number): Promise<void>
   unload(): void
-  Layer: JLayerService
 }
 
 export interface JLayerService {

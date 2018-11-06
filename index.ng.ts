@@ -27,6 +27,7 @@ export interface JAPIData extends JStoreGetterApi {
 export interface JStoreGetterApi {
   getMode(): API_MODE
   getAllMode(): API_MODE[]
+  getMapImplementation(): MAP_IMPLEMENTATION
 }
 
 export interface JStoreGetterApp {
@@ -59,7 +60,8 @@ export interface JStoreGetterUser {
   getLogin(): string
 }
 
-export interface JAPIState extends JAPIOwnState {
+export interface JAPIState {
+  api: JAPIOwnState
   app: JAppState
   project: JProjectState
   layer: JLayerState
@@ -70,6 +72,12 @@ export interface JAPIState extends JAPIOwnState {
 export interface JAPIOwnState {
   mode: API_MODE,
   allMode: API_MODE[]
+  mapImplementation: MAP_IMPLEMENTATION
+}
+
+export enum MAP_IMPLEMENTATION {
+  MAP_BOX = "MapBox",
+  OPEN_LAYERS = "OpenLayers"
 }
 
 // API DATA -> APP

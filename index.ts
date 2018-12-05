@@ -159,6 +159,7 @@ export interface JDocumentServiceUiController {
 export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
   selectElement(layer: string, element: string): Promise<void>
+  unselectElement(): void
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
   selectDocuments(documents: JDocumentDescriptor[]): void
   filter(filterValue: string | undefined): void

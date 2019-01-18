@@ -71,7 +71,6 @@ export interface JAPIApplicationOptions {
   containerId: string
 }
 
-
 // API SERVICE
 export interface JAPIService {
   Language: JAPILanguageService
@@ -160,9 +159,14 @@ export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
   selectElement(layer: string, element: string): Promise<void>
   unselectElement(): void
-  getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-  selectDocuments(documents: JDocumentDescriptor[]): void
+  getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
+  selectDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
+}
+
+export interface JAllDocumentDescriptors {
+  documents: JDocumentDescriptor[]
+  hyperlinks: JHyperlinkDescriptor[]
 }
 
 export interface JDocumentDescriptor {
@@ -171,6 +175,12 @@ export interface JDocumentDescriptor {
   description: string
   fileName: string
   creation: number // timestamp
+  depositName: string
+}
+
+export interface JHyperLinkDescriptor {
+  id: number
+  url: string
   depositName: string
 }
 

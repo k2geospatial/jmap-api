@@ -299,9 +299,20 @@ export interface JDocumentServiceUiController {
 export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
   selectElement(layer: string, element: string): Promise<void>
-  getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-  selectDocuments(documents: JDocumentDescriptor[]): void
+  getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
+  selectDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
+}
+
+export interface JAllDocumentDescriptors {
+  documents: JDocumentDescriptor[]
+  hyperlinks: JHyperLinkDescriptor[]
+}
+
+export interface JHyperLinkDescriptor {
+  id: number
+  url: string
+  depositName: string
 }
 
 export interface JDocumentDescriptor {

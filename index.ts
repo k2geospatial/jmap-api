@@ -146,13 +146,20 @@ export interface JExtensionModel {
 
 export interface JExtensionMouseOver {
   html: string  // static html content
-  js?: string   // javascript that will be evaluated after html rendered
+  js?: string   // javascript that wil
+  l be evaluated after html rendered
 }
 
-// @Deprecated will be removed when old jmap will be retired
-export interface JDocumentServiceUiController {
-  createDocumentIcon(layerId: string, elementId: string): void
-  displayElementDocuments(layerId: string, elementId: string): void
+
+
+// @Deprecated will be removed when ol
+d jmap will be retired
+export interface JDocumentServiceUiCon
+troller {
+  createDocumentIcon(layerId: string, 
+    elementId: string): void
+  displayElementDocuments(layerId: str
+    ing, elementId: string): void
 }
 
 export interface JDocumentService {
@@ -166,7 +173,7 @@ export interface JDocumentService {
 
 export interface JAllDocumentDescriptors {
   documents: JDocumentDescriptor[]
-  hyperlinks: JHyperlinkDescriptor[]
+  hyperlinks: JHyperLinkDescriptor[]
 }
 
 export interface JDocumentDescriptor {

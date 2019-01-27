@@ -123,7 +123,7 @@ export interface JAPIComponentItem<C extends React.Component> {
 // API COMPONENTS -> USER_SESSION CMP
 export interface JUserSessionCmp extends React.Component<JUserSessionProps, {}>{}
 export interface JUserSessionProps {
-  user?: JUserState
+  user: JUserState
 }
 
 // API EXTENSION

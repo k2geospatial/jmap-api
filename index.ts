@@ -1,5 +1,7 @@
 import { Action, Store } from "redux"
 
+export type UIComponent = void | Element | React.Component
+
 // API
 export interface JAPI {
   Extension: JAPIExtention
@@ -62,7 +64,7 @@ export interface JUserIdentity {
 export interface JAPIApplication {
   needToStart(): boolean
   getDomContainerId(): string
-  getInstance(): React.Component
+  getInstance(): UIComponent
   start(containerId?: string, initOptions?: JAPIApplicationOptions): void
 }
 
@@ -114,10 +116,10 @@ export interface JAPIComponent {
   UserSession: JAPIComponentItem<JUserSessionCmp>
 }
 
-export interface JAPIComponentItem<C extends React.Component> {
-  create(containerId: string, options: any): React.Component
+export interface JAPIComponentItem<C extends UIComponent> {
+  create(containerId: string, options: any): UIComponent
   destroy(containerId: string): void
-  getInstance(containerId: string): React.Component
+  getInstance(containerId: string): UIComponent
 }
 
 // API COMPONENTS -> USER_SESSION CMP

@@ -1,6 +1,6 @@
 {
   "name": "jmap-api",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "JMAP_API typescript extension files",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/k2geospatial/jmap-api#readme",
   "devDependencies": {
-    "@types/react": "^16.4.14",
+    "@types/react": "^16.8.3",
     "@types/redux": "^3.6.0"
   },
   "dependencies": {

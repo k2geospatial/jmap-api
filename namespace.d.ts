@@ -18,6 +18,12 @@ declare namespace JMAP_API {
       function login(login: string, password: string): Promise<JLoginData>
       function logout(): Promise<void>
     }
+    namespace Selection {
+      function getCurrentSelection(): JElementSelection
+      function addSelection(selection: JElementSelection): void
+      function removeSelection(selection: JElementSelection): void
+      function clearSelection(): void
+    }
   }
 
   // JMAP_API.Data : Provide redux store used by api, and also getters to easy access data
@@ -32,12 +38,15 @@ declare namespace JMAP_API {
       function getIdentity(): JUserIdentity
       function getLogin(): string
     }
+    namespace Selection {
+      function getCurrentSelection(): JElementSelection
+    }
   }
 
   // JMAP_API.Component : provide a way to start ui components by your own in the DOM container of your choice
   namespace Component {
-    // JMAP_API.Component.UserSession : user session management panel
-    const UserSession: JAPIComponent<JUserSessionCmp>
+    // JMAP_API.Component.FormFlat : form without sections, rows and column. Only field aligned vertically
+    const FormFlat: JAPIComponent<JFormCmp, JFormProps>
   }
 
   // JMAP_API.Application : JMap application instance management (not started by default)
@@ -92,6 +101,10 @@ interface JObjectId {
   element: string
 }
 
+interface JElementSelection {
+  [ layerId: number ]: number[]
+}
+
 interface JUserIdentity {
   firstName: string
   lastName: string
@@ -115,16 +128,162 @@ interface JAPIApplicationOptions {
   containerId: string
 }
 
-interface JAPIComponent<C extends React.Component> {
-  create(containerId: string, options: any): React.Component
+interface JAPIComponent<C extends React.Component, P> {
+  create(containerId: string, options?: P): C
   destroy(containerId: string): void
-  getInstance(containerId: string): React.Component
+  getInstance(containerId: string): C
 }
 
-interface JUserSessionCmp extends React.Component<JUserSessionProps, {}>{}
-interface JUserSessionProps {
-  user?: JUserState
+interface JFormCmp extends React.Component<JFormProps, {}>{}
+interface JFormProps {
+  formDescriptor: JFormDescriptor,
+  buttonLabelSubmit?: string
+  buttonLabelCancel?: string
+  buttonLabelClear?: string
+  hideClearButton?: boolean
+  onSubmit: (values: any) => void,
+  onCancel?: () => void
 }
+
+interface JFormDescriptor {
+  id: number
+  type: JFormTypes
+  name: string
+  readOnly: boolean
+  canInsert: boolean
+  canUpdate: boolean
+  canDelete: boolean
+  sections: JFormSection[]
+  permissions: { [ key: string ]: boolean }
+  idAttributeName: string | null
+}
+
+interface JFormSection {
+  name: string
+  nbCol: number
+  rows: JFormRow[]
+}
+
+interface JFormRow {
+  row: number
+  cells: JFormField[]
+}
+
+type JFormField = 
+    JFormFieldLabel
+    | JFormFieldEmpty
+    | JFormFieldInput
+    | JFormFieldInputText
+    | JFormFieldDate
+    | JFormFieldRange
+    | JFormFieldCheckBox
+    | JFormFieldSelectOne
+    | JFormFieldSelectBase
+    | JFormFieldSelectTree
+
+interface JFormFieldBase {
+  uuid: string
+  type: JFormFieldTypes
+  tooltip: string
+  display: {
+    width: number
+    row: number
+    colSpan: number
+    col: number
+    align: JFormFieldAlignments
+  }
+}
+
+interface JFormFieldEmpty extends JFormFieldBase {
+  type: JFormFieldTypes
+}
+
+interface JFormFieldLabel extends JFormFieldBase {
+  text: string
+}
+
+interface JFormFieldColumnSpan extends JFormFieldBase {
+  id: string
+}
+
+interface JFormFieldInput extends JFormFieldBase {
+  required: boolean
+  readOnly: boolean
+  defaultValue: string
+  labelPrefix: string
+  labelSuffix: string
+  attribute: {
+    name: string
+    type: number
+  }
+  parentAttribute: string
+}
+
+interface JFormFieldDate extends JFormFieldInput {
+  dateFormat: string
+}
+
+interface JFormFieldInputText extends JFormFieldInput {
+  range: null | { min: number, max: number }
+  multiLine: boolean
+  maxNumberCharacter: number
+  maskFormatter: string
+}
+
+interface JFormFieldRange extends JFormFieldInput {
+  type: JFormFieldTypes
+}
+
+interface JFormFieldCheckBox extends JFormFieldInput {
+  checkedValue: string
+  uncheckedValue: string
+}
+
+interface JFormFieldTreeEntry {
+  parentValue: string
+  label: string
+  value: string
+}
+
+interface JFormFieldSelectBase extends JFormFieldInput {
+  selectEntries: JFormFieldTreeEntry[]
+}
+
+interface JFormFieldSelectOne extends JFormFieldSelectBase {
+  canAddNewValue: boolean
+  autoSelectUniqueValue: boolean
+}
+
+interface JFormFieldSelectTree extends JFormFieldSelectBase {
+  onlyLeafSelection: boolean
+}
+
+type JFormTypes =
+  "DEPRECATED_FORM"
+  | "LAYER_ATTRIBUTES_FORM"
+  | "LAYER_ATTRIBUTES_SUB_FORM"
+  | "EXTERNAL_ATTRIBUTES_FORM"
+  | "EXTERNAL_ATTRIBUTES_SUB_FORM"
+
+type JFormFieldTypes =
+  "TYPE_EMPTY"
+  | "TYPE_COLUMN_SPAN"
+  | "TYPE_LABEL"
+  | "TYPE_INPUT_TEXT"
+  | "TYPE_INPUT_RANGE"
+  | "TYPE_SELECT_ONE"
+  | "TYPE_SELECT_MANY"
+  | "TYPE_INPUT_DATE"
+  | "TYPE_SELECT_BOOLEAN"
+  | "TYPE_GROUP_PANEL"
+  | "TYPE_DOCUMENT"
+  | "TYPE_TREE"
+  | "TYPE_TABLE"
+
+type JFormFieldAlignments =
+  "LEFT"
+  | "CENTER"
+  | "RIGHT"
 
 interface JUserState {
   identity: JUserIdentity

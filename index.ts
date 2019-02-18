@@ -24,6 +24,7 @@ export interface JAPIData {
   getStore(): Store<JAPIState>|undefined
   Project: JStoreGetterProject
   User: JStoreGetterUser
+  Selection: JStoreGetterSelection
 }
 
 export interface JStoreGetterProject {
@@ -37,9 +38,15 @@ export interface JStoreGetterUser {
   getLogin(): string
 }
 
+export interface JStoreGetterSelection {
+  getSelection(): JElementSelection
+}
+
 export interface JAPIState {
   project: JProjectState
   user: JUserState
+  selection: JSelectionState
+  form: any
   external?: any
 }
 
@@ -60,6 +67,11 @@ export interface JUserIdentity {
   login: string
 }
 
+// API DATA -> SELECTION
+export interface JSelectionState {
+  current: JElementSelection
+}
+
 // API APPLICATION
 export interface JAPIApplication {
   needToStart(): boolean
@@ -78,6 +90,7 @@ export interface JAPIService {
   Language: JAPILanguageService
   Project: JProjectService
   User: JUserService
+  Selection: JSelectionService
 }
 
 // API SERVICE -> LANGUAGE
@@ -111,21 +124,40 @@ export interface JUserPublicData {
   admin: boolean
 }
 
+// API SERVICE -> SELECTION
+export interface JSelectionService {
+  getCurrentSelection(): JElementSelection
+  addSelection(selection: JElementSelection): void
+  removeSelection(selection: JElementSelection): void
+  clearSelection(): void
+}
+
+export interface JElementSelection {
+  [ layerId: number ]: number[]
+}
+
 // API COMPONENTS
 export interface JAPIComponent {
-  UserSession: JAPIComponentItem<JUserSessionCmp>
+  FormFlat: JAPIComponentItem<JFormCmp, JFormProps>
 }
 
-export interface JAPIComponentItem<C extends UIComponent> {
-  create(containerId: string, options: any): UIComponent
+// P for react props
+export interface JAPIComponentItem<C extends UIComponent, P> {
+  create(containerId: string, props?: P): C
   destroy(containerId: string): void
-  getInstance(containerId: string): UIComponent
+  getInstance(containerId: string): C
 }
 
-// API COMPONENTS -> USER_SESSION CMP
-export interface JUserSessionCmp extends React.Component<JUserSessionProps, {}>{}
-export interface JUserSessionProps {
-  user: JUserState
+// API COMPONENTS -> FORM CMP
+export interface JFormCmp extends React.Component<JFormProps, {}>{}
+export interface JFormProps {
+  formDescriptor: JFormDescriptor,
+  buttonLabelSubmit?: string
+  buttonLabelCancel?: string
+  buttonLabelClear?: string
+  hideClearButton?: boolean
+  onSubmit: (values: any) => void,
+  onCancel?: () => void
 }
 
 // API EXTENSION
@@ -200,4 +232,118 @@ export interface JPopupService {
   popWarning(message: string): void
   popError(message: string): void
   popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
+}
+
+// FORM
+
+export interface JFormDescriptor {
+  id: number
+  type: JFormTypes
+  name: string
+  readOnly: boolean
+  canInsert: boolean
+  canUpdate: boolean
+  canDelete: boolean
+  sections: JFormSection[]
+  permissions: { [ key: string ]: boolean }
+  idAttributeName: string | null
+}
+
+export interface JFormSection {
+  name: string
+  nbCol: number
+  rows: JFormRow[]
+}
+
+export interface JFormRow {
+  row: number
+  cells: JFormField[]
+}
+
+export type JFormField = 
+    JFormFieldLabel
+    | JFormFieldEmpty
+    | JFormFieldInput
+    | JFormFieldInputText
+    | JFormFieldDate
+    | JFormFieldRange
+    | JFormFieldCheckBox
+    | JFormFieldSelectOne
+    | JFormFieldSelectBase
+    | JFormFieldSelectTree
+
+export interface JFormFieldBase {
+  type: JFormFieldTypes
+  tooltip: string
+  display: {
+    width: number
+    row: number
+    colSpan: number
+    col: number
+    align: JFormFieldAlignments
+  }
+}
+
+export interface JFormFieldEmpty extends JFormFieldBase {
+  type: JFormFieldTypes
+}
+
+export interface JFormFieldLabel extends JFormFieldBase {
+  text: string
+}
+
+export interface JFormFieldInput extends JFormFieldBase {
+  required: boolean
+  readOnly: boolean
+  defaultValue: string
+  labelPrefix: string
+  labelSuffix: string
+  attribute: {
+    name: string
+    type: number
+  }
+  parentAttribute: string
+}
+
+export interface JFormFieldColumnSpan extends JFormFieldBase {
+  id: string
+}
+
+export interface JFormFieldDate extends JFormFieldInput {
+  dateFormat: string
+}
+
+export interface JFormFieldInputText extends JFormFieldInput {
+  range: null | { min: number, max: number }
+  multiLine: boolean
+  maxNumberCharacter: number
+  maskFormatter: string
+}
+
+export interface JFormFieldRange extends JFormFieldInput {
+  type: JFormFieldTypes
+}
+
+export interface JFormFieldCheckBox extends JFormFieldInput {
+  checkedValue: string
+  uncheckedValue: string
+}
+
+interface JFormFieldTreeEntry {
+  parentValue: string
+  label: string
+  value: string
+}
+
+interface JFormFieldSelectBase extends JFormFieldInput {
+  selectEntries: JFormFieldTreeEntry[]
+}
+
+export interface JFormFieldSelectOne extends JFormFieldSelectBase {
+  canAddNewValue: boolean
+  autoSelectUniqueValue: boolean
+}
+
+export interface JFormFieldSelectTree extends JFormFieldSelectBase {
+  onlyLeafSelection: boolean
 }

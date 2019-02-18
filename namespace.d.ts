@@ -69,9 +69,12 @@ declare namespace JMAP_API {
     namespace Document {
       const ui_controller: any // @Deprecated
       function selectElement(layer: string, element: string): Promise<void>
-      function getElementDocuments(toSelectObjectId: JObjectId): Promise<JDocumentDescriptor[]>
-      function selectDocuments(documents: JDocumentDescriptor[]): void
+      function getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
+      function selectDocuments(documents: JAllDocumentDescriptors): void
       function filter(filterValue: string | undefined): void
+      function unselectElement(): void
+      function searchBasicDocumentsInAllDeposits(keyWord: string, isAssociated: boolean): Promise<JDocumentDescriptor[]>
+      function getAllDeposits(): Promise<JDepositDescriptor[]>
     }
   }
 }
@@ -81,6 +84,17 @@ declare interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
 }
 
+interface JAllDocumentDescriptors {
+  documents: JDocumentDescriptor[]
+  hyperlinks: JHyperLinkDescriptor[]
+}
+
+interface JHyperLinkDescriptor {
+  id: number
+  url: string
+  depositName: string
+}
+
 interface JDocumentDescriptor {
   identifier: number
   title: string
@@ -88,6 +102,13 @@ interface JDocumentDescriptor {
   fileName: string
   creation: number // timestamp
   depositName: string
+  depositId: number
+}
+
+interface JDepositDescriptor {
+  identifier: number
+  name: string
+  description: string
 }
 
 interface JExtensionMouseOver {

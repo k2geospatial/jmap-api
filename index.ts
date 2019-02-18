@@ -1,4 +1,5 @@
 import { Action, Store } from "redux"
+import { promises } from "fs";
 
 export type UIComponent = void | Element | React.Component
 
@@ -197,6 +198,8 @@ export interface JDocumentService {
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   selectDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
+  searchBasicDocumentsInAllDeposits(keyWord: string, isAssociated: boolean):  Promise<JDocumentDescriptor[]>
+  getAllDeposits(): Promise<JDepositDescriptor[]>
 }
 
 export interface JAllDocumentDescriptors {
@@ -211,6 +214,7 @@ export interface JDocumentDescriptor {
   fileName: string
   creation: number // timestamp
   depositName: string
+  depositId: number
 }
 
 export interface JHyperLinkDescriptor {

@@ -1,5 +1,4 @@
 import { Action, Store } from "redux"
-import { promises } from "fs";
 
 export type UIComponent = void | Element | React.Component
 
@@ -198,7 +197,18 @@ export interface JDocumentService {
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   selectDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
-  searchBasicDocumentsInAllDeposits(keyWord: string, isAssociated: boolean):  Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInAllDeposits(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInDepositsForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInDepositsForRegion(searchparams: JDocumentSearchParams)
+  : Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInDepositsForRegionAndElementSelection(searchparams: JDocumentSearchParams)
+  : Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInOneDeposit(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInOneDepositForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInOneDepositForRegion(searchparams: JDocumentSearchParams):
+   Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInOneDepositForRegionAndElementSelection(searchparams: JDocumentSearchParams):
+   Promise<JDocumentDescriptor[]>
   getAllDeposits(): Promise<JDepositDescriptor[]>
 }
 
@@ -350,4 +360,19 @@ export interface JFormFieldSelectOne extends JFormFieldSelectBase {
 
 export interface JFormFieldSelectTree extends JFormFieldSelectBase {
   onlyLeafSelection: boolean
+}
+
+export interface JDocumentSearchParams {
+  keyWord: string
+  depositId?: number
+  isAssociated?: boolean
+  region?: JDocumentSearchRegion
+  elementIds?: number[]
+}
+
+export interface JDocumentSearchRegion {
+  coordX: number
+  coordY: number
+  width: number
+  height: number
 }

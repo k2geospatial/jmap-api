@@ -192,24 +192,24 @@ export interface JDocumentServiceUiController {
 
 export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
-  selectElement(layer: string, element: string): Promise<void>
+  setSelectedElementOnMap(layer: string, element: string): Promise<void>
   unselectElement(): void
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
-  selectDocuments(descriptors: JAllDocumentDescriptors): void
+  setDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
   searchBasicDocumentsInAllDeposits(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  getDeposits(): Promise<JDepositDescriptor[]>
+  setDeposits(deposits: JDepositDescriptor[]): void
+  setSelectedSearchForm(formId: number): JFormDescriptor
+  setSearchAdvancedDeposit(depositId: number): void
+  setSearchBasicDeposit(depositId: number): void
   searchBasicDocumentsInDepositsForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInDepositsForRegion(searchparams: JDocumentSearchParams)
-  : Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInDepositsForRegionAndElementSelection(searchparams: JDocumentSearchParams)
-  : Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInDepositsForRegion(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInDepositsForRegionAndElementSelection(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>
   searchBasicDocumentsInOneDeposit(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
   searchBasicDocumentsInOneDepositForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDepositForRegion(searchparams: JDocumentSearchParams):
-   Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDepositForRegionAndElementSelection(searchparams: JDocumentSearchParams):
-   Promise<JDocumentDescriptor[]>
-  getAllDeposits(): Promise<JDepositDescriptor[]>
+  searchBasicDocumentsInOneDepositForRegion(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
+  searchBasicDocumentsInOneDepositForRegionAndElementSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
 }
 
 export interface JAllDocumentDescriptors {

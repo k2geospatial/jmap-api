@@ -197,12 +197,19 @@ export interface JDocumentService {
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   setDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
-  searchBasicDocumentsInAllDeposits(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
   getDeposits(): Promise<JDepositDescriptor[]>
   setDeposits(deposits: JDepositDescriptor[]): void
-  setSelectedSearchForm(formId: number): JFormDescriptor
+  getDepositForms(depositId: number): Promise<JFormDescriptor[]>
+  setSelectedSearchForm(formId: number): void
   setSearchAdvancedDeposit(depositId: number): void
   setSearchBasicDeposit(depositId: number): void
+  setSearchAdvancedOptionRegion(selected: boolean): void
+  setSearchAdvancedOptionElementSelected(selected: boolean): void
+  setSearchBasicOptionRegion(selected: boolean): void
+  setSearchBasicOptionElementSelected(selected: boolean): void
+  processSearchBasic(): void
+  processSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+  searchBasicDocumentsInAllDeposits(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
   searchBasicDocumentsInDepositsForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
   searchBasicDocumentsInDepositsForRegion(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>
   searchBasicDocumentsInDepositsForRegionAndElementSelection(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>

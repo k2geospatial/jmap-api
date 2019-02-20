@@ -75,6 +75,7 @@ declare namespace JMAP_API {
       function unselectElement(): void
       function searchBasicDocumentsInAllDeposits(keyWord: string, isAssociated: boolean): Promise<JDocumentDescriptor[]>
       function getAllDeposits(): Promise<JDepositDescriptor[]>
+      function selectSearchForm(form: JFormFieldTreeEntry): void
     }
   }
 }
@@ -106,7 +107,7 @@ interface JDocumentDescriptor {
 }
 
 interface JDepositDescriptor {
-  identifier: number
+  id: number
   name: string
   description: string
 }
@@ -203,7 +204,7 @@ type JFormField =
     | JFormFieldSelectTree
 
 interface JFormFieldBase {
-  uuid: string
+  uuid?: string
   type: JFormFieldTypes
   tooltip: string
   display: {

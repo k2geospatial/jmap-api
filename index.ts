@@ -192,23 +192,37 @@ export interface JDocumentServiceUiController {
 
 export interface JDocumentService {
   ui_controller: JDocumentServiceUiController // @Deprecated
-  setSelectedElementOnMap(layer: string, element: string): Promise<void>
-  unselectElement(): void
+
+  setMode(newMode: JDocumentMode): void
+
+  selectMapElement(layer: string, element: string): Promise<void>
+  unSelectMapElement(): void
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
-  setDocuments(descriptors: JAllDocumentDescriptors): void
-  filter(filterValue: string | undefined): void
-  getDeposits(): Promise<JDepositDescriptor[]>
+
+  setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
+
+  filter(filterValue: string | undefined): void
+
+  getAndSetDeposits(): Promise<JDepositDescriptor[]>
   setDeposits(deposits: JDepositDescriptor[]): void
-  getDepositForms(depositId: number): Promise<JFormDescriptor[]>
-  setSelectedSearchForm(formId: number): void
-  setSearchAdvancedDeposit(depositId: number): void
+
   setSearchBasicDeposit(depositId: number): void
-  setSearchAdvancedOptionRegion(selected: boolean): void
-  setSearchAdvancedOptionElementSelected(selected: boolean): void
+  setSearchBasicTextInput(filter: string): void
   setSearchBasicOptionRegion(selected: boolean): void
   setSearchBasicOptionElementSelected(selected: boolean): void
-  processSearchBasic(): void
-  processSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+  resetSearchBasic(textInput?: string): void
+  launchSearchBasic(): void
+
+  getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
+  selectSearchAdvancedDepositForm(formId: number): void
+  setSearchAdvancedDeposit(depositId: number): void
+  setSearchAdvancedOptionRegion(selected: boolean): void
+  setSearchAdvancedOptionElementSelected(selected: boolean): void
+  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+}
+
+export enum JDocumentMode {
+  MENU, SELECTION, SEARCH_BASIC, SEARCH_ADVANCED
 }
 
 export interface JAllDocumentDescriptors {

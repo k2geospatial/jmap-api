@@ -1,6 +1,6 @@
 import { Action, Store } from "redux"
 
-export type UIComponent = void | Element | React.Component
+export type UIComponent = void | Element | React.Component
 
 // API
 export interface JAPI {
@@ -100,12 +100,12 @@ export interface JAPILanguageService {
   translate(key: string, params?: string|string[], locale?: string): string
 }
 
-// API SERVICE -> PROJECT
+// API SERVICE -> PROJECT
 export interface JProjectService {
   setId(projectId: string): void
 }
 
-// API SERVICE -> USER
+// API SERVICE -> USER
 export interface JUserService {
   setSessionId(token: string): void
   login(login: string, password: string): Promise<JLoginData>
@@ -196,7 +196,7 @@ export interface JDocumentService {
   unselectElement(): void
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   setDocuments(descriptors: JAllDocumentDescriptors): void
-  filter(filterValue: string | undefined): void
+  filter(filterValue: string | undefined): void
   getDeposits(): Promise<JDepositDescriptor[]>
   setDeposits(deposits: JDepositDescriptor[]): void
   getDepositForms(depositId: number): Promise<JFormDescriptor[]>
@@ -209,14 +209,6 @@ export interface JDocumentService {
   setSearchBasicOptionElementSelected(selected: boolean): void
   processSearchBasic(): void
   processSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
-  searchBasicDocumentsInAllDeposits(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInDepositsForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInDepositsForRegion(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInDepositsForRegionAndElementSelection(searchparams: JDocumentSearchParams) : Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDeposit(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDepositForSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDepositForRegion(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
-  searchBasicDocumentsInOneDepositForRegionAndElementSelection(searchparams: JDocumentSearchParams): Promise<JDocumentDescriptor[]>
 }
 
 export interface JAllDocumentDescriptors {
@@ -252,7 +244,7 @@ export interface JPopupService {
   popInfo(message: string): void
   popWarning(message: string): void
   popError(message: string): void
-  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
+  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
 }
 
 // FORM
@@ -284,10 +276,10 @@ export interface JFormRow {
 export type JFormField = 
     JFormFieldLabel
     | JFormFieldEmpty
-    | JFormFieldInput
+    | JFormFieldInput
     | JFormFieldInputText
-    | JFormFieldDate
-    | JFormFieldRange
+    | JFormFieldDate
+    | JFormFieldRange
     | JFormFieldCheckBox
     | JFormFieldSelectOne
     | JFormFieldSelectBase
@@ -370,11 +362,19 @@ export interface JFormFieldSelectTree extends JFormFieldSelectBase {
 }
 
 export interface JDocumentSearchParams {
-  keyWord: string
-  depositId?: number
+  searchCriteria: JDocumentSearchCriteria[]
   isAssociated?: boolean
-  region?: JDocumentSearchRegion
-  elementIds?: number[]
+  searchRegion?: JDocumentSearchRegion
+  elementIdsBylayerId: {
+    [ layerId: number ]: number[]
+  }
+}
+
+export interface JDocumentSearchCriteria {
+  attName: string
+  value: string
+  type: string
+  operatorValue: string
 }
 
 export interface JDocumentSearchRegion {

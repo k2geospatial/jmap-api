@@ -211,7 +211,7 @@ export interface JDocumentService {
   setSearchBasicOptionRegion(selected: boolean): void
   setSearchBasicOptionElementSelected(selected: boolean): void
   resetSearchBasic(textInput?: string): void
-  launchSearchBasic(): void
+  launchSearchBasic(): Promise<JDocumentDescriptor[]> 
 
   getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
   selectSearchAdvancedDepositForm(formId: number): void
@@ -379,7 +379,7 @@ export interface JDocumentSearchParams {
   searchCriteria: JDocumentSearchCriteria[]
   isAssociated?: boolean
   searchRegion?: JDocumentSearchRegion
-  elementIdsBylayerId: {
+  layerElementIds?: {
     [ layerId: number ]: number[]
   }
 }

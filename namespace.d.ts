@@ -19,7 +19,7 @@ declare namespace JMAP_API {
       function logout(): Promise<void>
     }
     namespace Selection {
-      function getCurrentSelection(): JElementSelection
+      function getSelection(): JElementSelection
       function addSelection(selection: JElementSelection): void
       function removeSelection(selection: JElementSelection): void
       function clearSelection(): void
@@ -39,7 +39,7 @@ declare namespace JMAP_API {
       function getLogin(): string
     }
     namespace Selection {
-      function getCurrentSelection(): JElementSelection
+      function getSelection(): JElementSelection
     }
   }
 

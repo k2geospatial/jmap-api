@@ -379,7 +379,7 @@ export interface JDocumentSearchParams {
   searchCriteria: JDocumentSearchCriteria[]
   isAssociated?: boolean
   searchRegion?: JDocumentSearchRegion
-  layerElementIds?: {
+  elementIdsByLayerId?: {
     [ layerId: number ]: number[]
   }
 }

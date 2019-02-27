@@ -218,7 +218,7 @@ export interface JDocumentService {
   setSearchAdvancedDeposit(depositId: number): void
   setSearchAdvancedOptionRegion(selected: boolean): void
   setSearchAdvancedOptionElementSelected(selected: boolean): void
-  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): Promise<JDocumentDescriptor[]>
 }
 
 export enum JDocumentMode {
@@ -379,14 +379,14 @@ export interface JDocumentSearchParams {
   searchCriteria: JDocumentSearchCriteria[]
   isAssociated?: boolean
   searchRegion?: JDocumentSearchRegion
-  elementIdsByLayerId?: {
+  layerElementIds?: {
     [ layerId: number ]: number[]
   }
 }
 
 export interface JDocumentSearchCriteria {
   attName: string
-  value: string
+  value: any
   type: string
   operatorValue: string
 }

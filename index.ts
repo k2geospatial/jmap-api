@@ -199,26 +199,27 @@ export interface JDocumentService {
   unSelectMapElement(): void
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
 
-  setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
-
-  filter(filterValue: string | undefined): void
-
   getAndSetDeposits(): Promise<JDepositDescriptor[]>
   setDeposits(deposits: JDepositDescriptor[]): void
+
+  setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
+  filterSelectionResult(filterValue: string | undefined): void
 
   setSearchBasicDeposit(depositId: number): void
   setSearchBasicTextInput(filter: string): void
   setSearchBasicOptionRegion(selected: boolean): void
   setSearchBasicOptionElementSelected(selected: boolean): void
   resetSearchBasic(textInput?: string): void
-  launchSearchBasic(): Promise<JDocumentDescriptor[]> 
+  filterSearchBasicResult(filterValue: string | undefined): void
+  launchSearchBasic(): Promise<JDocumentDescriptor[]>
 
   getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
   selectSearchAdvancedDepositForm(formId: number): void
   setSearchAdvancedDeposit(depositId: number): void
   setSearchAdvancedOptionRegion(selected: boolean): void
   setSearchAdvancedOptionElementSelected(selected: boolean): void
-  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): Promise<JDocumentDescriptor[]>
+  filterSearchAdvancedResult(filterValue: string | undefined): void
+  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
 }
 
 export enum JDocumentMode {
@@ -379,7 +380,7 @@ export interface JDocumentSearchParams {
   searchCriteria: JDocumentSearchCriteria[]
   isAssociated?: boolean
   searchRegion?: JDocumentSearchRegion
-  layerElementIds?: {
+  elementIdsByLayerId?: {
     [ layerId: number ]: number[]
   }
 }

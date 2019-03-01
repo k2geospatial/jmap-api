@@ -68,14 +68,36 @@ declare namespace JMAP_API {
     // JMAP_API.Extension.Document : @Optional
     namespace Document {
       const ui_controller: any // @Deprecated
-      function selectElement(layer: string, element: string): Promise<void>
+
+      function setMode(newMode: JDocumentMode): void
+
+      function selectMapElement(layer: string, element: string): Promise<void>
+      function unSelectMapElement(): void
       function getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
-      function selectDocuments(documents: JAllDocumentDescriptors): void
-      function filter(filterValue: string | undefined): void
-      function unselectElement(): void
-      function searchBasicDocumentsInAllDeposits(keyWord: string, isAssociated: boolean): Promise<JDocumentDescriptor[]>
-      function getAllDeposits(): Promise<JDepositDescriptor[]>
-      function selectSearchForm(form: JFormFieldTreeEntry): void
+
+      function getAndSetDeposits(): Promise<JDepositDescriptor[]>
+      function setDeposits(deposits: JDepositDescriptor[]): void
+
+      function setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
+      function filterSelectionResult(filterValue: string | undefined): void
+
+      function setSearchBasicDeposit(depositId: number): void
+      function setSearchBasicTextInput(filter: string): void
+      function setSearchBasicOptionRegion(selected: boolean): void
+      function setSearchBasicOptionElementSelected(selected: boolean): void
+      function resetSearchBasic(textInput?: string): void
+      function filterSearchBasicResult(filterValue: string | undefined): void
+      function clearSearchBasicResult(): void
+      function launchSearchBasic(): Promise<JDocumentDescriptor[]>
+
+      function getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
+      function selectSearchAdvancedDepositForm(formId: number): void
+      function setSearchAdvancedDeposit(depositId: number): void
+      function setSearchAdvancedOptionRegion(selected: boolean): void
+      function setSearchAdvancedOptionElementSelected(selected: boolean): void
+      function filterSearchAdvancedResult(filterValue: string | undefined): void
+      function clearSearchAdvancedResult(): void
+      function launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
     }
   }
 }
@@ -158,6 +180,7 @@ interface JAPIComponent<C extends React.Component, P> {
 
 interface JFormCmp extends React.Component<JFormProps, {}>{}
 interface JFormProps {
+  idPrefix: string
   formDescriptor: JFormDescriptor,
   buttonLabelSubmit?: string
   buttonLabelCancel?: string
@@ -165,6 +188,7 @@ interface JFormProps {
   hideClearButton?: boolean
   onSubmit: (values: any) => void,
   onCancel?: () => void
+  onClear?: () => void
 }
 
 interface JFormDescriptor {
@@ -326,3 +350,5 @@ interface JExtensionModel {
   serviceToExpose?: any
   renderMouseOver?(layerId: string, elementId: string): JExtensionMouseOver
 }
+
+type JDocumentMode = "MENU" | "SELECTION" | "SEARCH_BASIC" | "SEARCH_ADVANCED"

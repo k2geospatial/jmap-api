@@ -151,6 +151,7 @@ export interface JAPIComponentItem<C extends UIComponent, P> {
 // API COMPONENTS -> FORM CMP
 export interface JFormCmp extends React.Component<JFormProps, {}>{}
 export interface JFormProps {
+  idPrefix: string
   formDescriptor: JFormDescriptor,
   buttonLabelSubmit?: string
   buttonLabelCancel?: string
@@ -158,6 +159,7 @@ export interface JFormProps {
   hideClearButton?: boolean
   onSubmit: (values: any) => void,
   onCancel?: () => void
+  onClear?: () => void
 }
 
 // API EXTENSION
@@ -211,6 +213,7 @@ export interface JDocumentService {
   setSearchBasicOptionElementSelected(selected: boolean): void
   resetSearchBasic(textInput?: string): void
   filterSearchBasicResult(filterValue: string | undefined): void
+  clearSearchBasicResult(): void
   launchSearchBasic(): Promise<JDocumentDescriptor[]>
 
   getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
@@ -219,6 +222,7 @@ export interface JDocumentService {
   setSearchAdvancedOptionRegion(selected: boolean): void
   setSearchAdvancedOptionElementSelected(selected: boolean): void
   filterSearchAdvancedResult(filterValue: string | undefined): void
+  clearSearchAdvancedResult(): void
   launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
 }
 

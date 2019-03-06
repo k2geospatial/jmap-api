@@ -1,6 +1,6 @@
 {
   "name": "jmap-api",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "JMAP_API typescript extension files",
   "main": "index.js",
   "scripts": {

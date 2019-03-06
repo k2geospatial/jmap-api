@@ -18,7 +18,7 @@ export interface JAPIOptions {
 
 // API DATA
 export interface JAPIData extends JStoreGetterApi {
-  getStore(): Store<JAPIState>|undefined
+  getStore(): Store<JAPIState> | undefined
   App: JStoreGetterApp
   Project: JStoreGetterProject
   User: JStoreGetterUser
@@ -91,7 +91,7 @@ export type JProjectState = JProject
 // API DATA -> LAYER
 export interface JLayerState {
   tree: JLayerTree
-  allById: { [ layerElementId: string ]: JLayerElement }
+  allById: { [layerElementId: string]: JLayerElement }
 }
 
 // API DATA -> USER
@@ -146,7 +146,7 @@ export enum API_MODE {
 export interface JAPILanguageService {
   getLocale(): string
   setLocale(locale: string): void
-  translate(key: string, params?: string|string[], locale?: string): string
+  translate(key: string, params?: string | string[], locale?: string): string
 }
 
 // API SERVICE -> POPUP
@@ -154,7 +154,7 @@ export interface JPopupService {
   popInfo(message: string): void
   popWarning(message: string): void
   popError(message: string): void
-  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
+  popConfirm(message: string, confirmCallback: (() => any), cancelCallback?: (() => any)): void
 }
 
 // API SERVICE -> PROJECT
@@ -166,7 +166,7 @@ export interface JProject {
   initialRotation: number
   scaleMax: number
   scaleMin: number
-  colorSelection: string 
+  colorSelection: string
   colorBackground: string
   initialViewBounds: JBounds
 }
@@ -262,7 +262,7 @@ export interface JAPIComponentItem<C extends React.Component> {
 }
 
 // API COMPONENTS -> USER CMP
-export interface JUserCmp extends React.Component<JUserProps, {}>{}
+export interface JUserCmp extends React.Component<JUserProps, {}> { }
 export interface JUserProps {
   user?: JUserState
 }
@@ -301,7 +301,7 @@ export interface JDocumentService {
   selectElement(layer: string, element: string): Promise<void>
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   selectDocuments(descriptors: JAllDocumentDescriptors): void
-  filter(filterValue: string | undefined): void
+  filter(filterValue: string | undefined): void
 }
 
 export interface JAllDocumentDescriptors {
@@ -313,6 +313,10 @@ export interface JHyperLinkDescriptor {
   id: number
   url: string
   depositName: string
+  depositId: number
+  linkDescription: string
+  linkImageLocation: string
+  linkTitle: string
 }
 
 export interface JDocumentDescriptor {

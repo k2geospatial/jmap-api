@@ -8,7 +8,7 @@ declare namespace JMAP_API {
   namespace Service {
     namespace Language {
       function getLocale(): string // EN (default), FR, ES, or PT
-      function translate(key: string, params?: string|string[], locale?: string): string
+      function translate(key: string, params?: string | string[], locale?: string): string
     }
     namespace Project {
       function setId(projectId: string): void
@@ -79,14 +79,14 @@ declare namespace JMAP_API {
       function setDeposits(deposits: JDepositDescriptor[]): void
 
       function setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
-      function filterSelectionResult(filterValue: string | undefined): void
+      function filterSelectionResult(filterValue: string | undefined): void
 
       function setSearchBasicDeposit(depositId: number): void
       function setSearchBasicTextInput(filter: string): void
       function setSearchBasicOptionRegion(selected: boolean): void
       function setSearchBasicOptionElementSelected(selected: boolean): void
       function resetSearchBasic(textInput?: string): void
-      function filterSearchBasicResult(filterValue: string | undefined): void
+      function filterSearchBasicResult(filterValue: string | undefined): void
       function clearSearchBasicResult(): void
       function launchSearchBasic(): Promise<JDocumentDescriptor[]>
 
@@ -95,9 +95,9 @@ declare namespace JMAP_API {
       function setSearchAdvancedDeposit(depositId: number): void
       function setSearchAdvancedOptionRegion(selected: boolean): void
       function setSearchAdvancedOptionElementSelected(selected: boolean): void
-      function filterSearchAdvancedResult(filterValue: string | undefined): void
+      function filterSearchAdvancedResult(filterValue: string | undefined): void
       function clearSearchAdvancedResult(): void
-      function launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+      function launchSearchAdvanced(valuesByAttributeName: { [attributeName: string]: any }): void
     }
   }
 }
@@ -116,6 +116,10 @@ interface JHyperLinkDescriptor {
   id: number
   url: string
   depositName: string
+  depositId: number
+  linkDescription: string
+  linkImageLocation: string
+  linkTitle: string
 }
 
 interface JDocumentDescriptor {
@@ -146,7 +150,7 @@ interface JObjectId {
 }
 
 interface JElementSelection {
-  [ layerId: number ]: number[]
+  [layerId: number]: number[]
 }
 
 interface JUserIdentity {
@@ -178,7 +182,7 @@ interface JAPIComponent<C extends React.Component, P> {
   getInstance(containerId: string): C
 }
 
-interface JFormCmp extends React.Component<JFormProps, {}>{}
+interface JFormCmp extends React.Component<JFormProps, {}> { }
 interface JFormProps {
   idPrefix: string
   formDescriptor: JFormDescriptor,
@@ -200,7 +204,7 @@ interface JFormDescriptor {
   canUpdate: boolean
   canDelete: boolean
   sections: JFormSection[]
-  permissions: { [ key: string ]: boolean }
+  permissions: { [key: string]: boolean }
   idAttributeName: string | null
 }
 
@@ -215,17 +219,17 @@ interface JFormRow {
   cells: JFormField[]
 }
 
-type JFormField = 
-    JFormFieldLabel
-    | JFormFieldEmpty
-    | JFormFieldInput
-    | JFormFieldInputText
-    | JFormFieldDate
-    | JFormFieldRange
-    | JFormFieldCheckBox
-    | JFormFieldSelectOne
-    | JFormFieldSelectBase
-    | JFormFieldSelectTree
+type JFormField =
+  JFormFieldLabel
+  | JFormFieldEmpty
+  | JFormFieldInput
+  | JFormFieldInputText
+  | JFormFieldDate
+  | JFormFieldRange
+  | JFormFieldCheckBox
+  | JFormFieldSelectOne
+  | JFormFieldSelectBase
+  | JFormFieldSelectTree
 
 interface JFormFieldBase {
   uuid?: string
@@ -309,22 +313,22 @@ type JFormTypes =
   | "LAYER_ATTRIBUTES_FORM"
   | "LAYER_ATTRIBUTES_SUB_FORM"
   | "EXTERNAL_ATTRIBUTES_FORM"
-  | "EXTERNAL_ATTRIBUTES_SUB_FORM"
+  | "EXTERNAL_ATTRIBUTES_SUB_FORM"
 
 type JFormFieldTypes =
   "TYPE_EMPTY"
   | "TYPE_COLUMN_SPAN"
-  | "TYPE_LABEL"
-  | "TYPE_INPUT_TEXT"
-  | "TYPE_INPUT_RANGE"
-  | "TYPE_SELECT_ONE"
-  | "TYPE_SELECT_MANY"
-  | "TYPE_INPUT_DATE"
-  | "TYPE_SELECT_BOOLEAN"
-  | "TYPE_GROUP_PANEL"
-  | "TYPE_DOCUMENT"
-  | "TYPE_TREE"
-  | "TYPE_TABLE"
+  | "TYPE_LABEL"
+  | "TYPE_INPUT_TEXT"
+  | "TYPE_INPUT_RANGE"
+  | "TYPE_SELECT_ONE"
+  | "TYPE_SELECT_MANY"
+  | "TYPE_INPUT_DATE"
+  | "TYPE_SELECT_BOOLEAN"
+  | "TYPE_GROUP_PANEL"
+  | "TYPE_DOCUMENT"
+  | "TYPE_TREE"
+  | "TYPE_TABLE"
 
 type JFormFieldAlignments =
   "LEFT"

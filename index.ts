@@ -21,7 +21,7 @@ export interface JAPIOptions {
 
 // API DATA
 export interface JAPIData {
-  getStore(): Store<JAPIState>|undefined
+  getStore(): Store<JAPIState> | undefined
   Project: JStoreGetterProject
   User: JStoreGetterUser
   Selection: JStoreGetterSelection
@@ -97,7 +97,7 @@ export interface JAPIService {
 export interface JAPILanguageService {
   getLocale(): string
   setLocale(locale: string): void
-  translate(key: string, params?: string|string[], locale?: string): string
+  translate(key: string, params?: string | string[], locale?: string): string
 }
 
 // API SERVICE -> PROJECT
@@ -133,7 +133,7 @@ export interface JSelectionService {
 }
 
 export interface JElementSelection {
-  [ layerId: number ]: number[]
+  [layerId: number]: number[]
 }
 
 // API COMPONENTS
@@ -149,7 +149,7 @@ export interface JAPIComponentItem<C extends UIComponent, P> {
 }
 
 // API COMPONENTS -> FORM CMP
-export interface JFormCmp extends React.Component<JFormProps, {}>{}
+export interface JFormCmp extends React.Component<JFormProps, {}> { }
 export interface JFormProps {
   idPrefix: string
   formDescriptor: JFormDescriptor,
@@ -187,7 +187,7 @@ export interface JExtensionMouseOver {
 
 // @Deprecated will be removed when old jmap will be retired
 export interface JDocumentServiceUiController {
-  createDocumentIcon(layerId: string, 
+  createDocumentIcon(layerId: string,
     elementId: string): void
   displayElementDocuments(layerId: string, elementId: string): void
 }
@@ -205,14 +205,14 @@ export interface JDocumentService {
   setDeposits(deposits: JDepositDescriptor[]): void
 
   setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
-  filterSelectionResult(filterValue: string | undefined): void
+  filterSelectionResult(filterValue: string | undefined): void
 
   setSearchBasicDeposit(depositId: number): void
   setSearchBasicTextInput(filter: string): void
   setSearchBasicOptionRegion(selected: boolean): void
   setSearchBasicOptionElementSelected(selected: boolean): void
   resetSearchBasic(textInput?: string): void
-  filterSearchBasicResult(filterValue: string | undefined): void
+  filterSearchBasicResult(filterValue: string | undefined): void
   clearSearchBasicResult(): void
   launchSearchBasic(): Promise<JDocumentDescriptor[]>
 
@@ -221,9 +221,9 @@ export interface JDocumentService {
   setSearchAdvancedDeposit(depositId: number): void
   setSearchAdvancedOptionRegion(selected: boolean): void
   setSearchAdvancedOptionElementSelected(selected: boolean): void
-  filterSearchAdvancedResult(filterValue: string | undefined): void
+  filterSearchAdvancedResult(filterValue: string | undefined): void
   clearSearchAdvancedResult(): void
-  launchSearchAdvanced(valuesByAttributeName: {[ attributeName: string]: any }): void
+  launchSearchAdvanced(valuesByAttributeName: { [attributeName: string]: any }): void
 }
 
 export enum JDocumentMode {
@@ -249,6 +249,10 @@ export interface JHyperLinkDescriptor {
   id: number
   url: string
   depositName: string
+  depositId: number
+  linkDescription: string
+  linkImageLocation: string
+  linkTitle: string
 }
 
 // MIS
@@ -277,7 +281,7 @@ export interface JFormDescriptor {
   canUpdate: boolean
   canDelete: boolean
   sections: JFormSection[]
-  permissions: { [ key: string ]: boolean }
+  permissions: { [key: string]: boolean }
   idAttributeName: string | null
 }
 
@@ -292,17 +296,17 @@ export interface JFormRow {
   cells: JFormField[]
 }
 
-export type JFormField = 
-    JFormFieldLabel
-    | JFormFieldEmpty
-    | JFormFieldInput
-    | JFormFieldInputText
-    | JFormFieldDate
-    | JFormFieldRange
-    | JFormFieldCheckBox
-    | JFormFieldSelectOne
-    | JFormFieldSelectBase
-    | JFormFieldSelectTree
+export type JFormField =
+  JFormFieldLabel
+  | JFormFieldEmpty
+  | JFormFieldInput
+  | JFormFieldInputText
+  | JFormFieldDate
+  | JFormFieldRange
+  | JFormFieldCheckBox
+  | JFormFieldSelectOne
+  | JFormFieldSelectBase
+  | JFormFieldSelectTree
 
 export interface JFormFieldBase {
   type: JFormFieldTypes
@@ -385,7 +389,7 @@ export interface JDocumentSearchParams {
   isAssociated?: boolean
   searchRegion?: JDocumentSearchRegion
   elementIdsByLayerId?: {
-    [ layerId: number ]: number[]
+    [layerId: number]: number[]
   }
 }
 

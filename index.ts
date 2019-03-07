@@ -253,6 +253,7 @@ export interface JHyperLinkDescriptor {
   linkDescription: string
   linkImageLocation: string
   linkTitle: string
+  linkFavicon: string
 }
 
 // MIS

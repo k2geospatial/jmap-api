@@ -263,11 +263,13 @@ interface JFormFieldInput extends JFormFieldBase {
   defaultValue: string
   labelPrefix: string
   labelSuffix: string
-  attribute: {
-    name: string
-    type: number
-  }
+  attribute: JFormFieldAttribute
   parentAttribute: string
+}
+
+interface JFormFieldAttribute {
+  name: string
+  type: number
 }
 
 interface JFormFieldDate extends JFormFieldInput {

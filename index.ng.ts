@@ -302,6 +302,8 @@ export interface JDocumentService {
   getElementDocuments(toSelectObjectId: JObjectId): Promise<JAllDocumentDescriptors>
   selectDocuments(descriptors: JAllDocumentDescriptors): void
   filter(filterValue: string | undefined): void
+
+  getRichPreview(websiteUrl: string): void
 }
 
 export interface JAllDocumentDescriptors {

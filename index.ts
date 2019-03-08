@@ -224,6 +224,8 @@ export interface JDocumentService {
   filterSearchAdvancedResult(filterValue: string | undefined): void
   clearSearchAdvancedResult(): void
   launchSearchAdvanced(valuesByAttributeName: { [attributeName: string]: any }): void
+
+  getRichPreview(websiteUrl: string): void
 }
 
 export enum JDocumentMode {

@@ -245,6 +245,7 @@ export interface JDocumentDescriptor {
   creation: number // timestamp
   depositName: string
   depositId: number
+  hasDownloadPermission: boolean
 }
 
 export interface JHyperLinkDescriptor {

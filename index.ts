@@ -130,6 +130,8 @@ export interface JSelectionService {
   addSelection(selection: JElementSelection): void
   removeSelection(selection: JElementSelection): void
   clearSelection(): void
+  setSelection(association: JElementSelectionWithAttribute[]): Promise<any[]>
+  zoomToSelection(elements: any): void
 }
 
 export interface JElementSelection {
@@ -206,6 +208,7 @@ export interface JDocumentService {
 
   setSelectionDocuments(descriptors: JAllDocumentDescriptors): void
   filterSelectionResult(filterValue: string | undefined): void
+  showOnMap(document: JDocumentDescriptor): void
 
   setSearchBasicDeposit(depositId: number): void
   setSearchBasicTextInput(filter: string): void

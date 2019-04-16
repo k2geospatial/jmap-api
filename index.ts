@@ -132,6 +132,7 @@ export interface JSelectionService {
   clearSelection(): void
   setSelection(association: JElementSelectionWithAttribute[]): Promise<any[]>
   zoomToSelection(elements: any): void
+  initializeElementAttributesPanel(selectedElements: any[]) : void
 }
 
 export interface JElementSelection {

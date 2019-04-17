@@ -136,6 +136,12 @@ interface JDocumentDescriptor {
   depositId: number
   hasDownloadPermission: boolean
   documentAssociations: JElementSelectionWithAttribute[]
+  metadataList: JDocumentMetadata[]
+}
+
+interface JDocumentMetadata {
+  name: string
+  values: (string | number)[]
 }
 
 interface JDepositDescriptor {

@@ -91,6 +91,7 @@ export interface JAPIService {
   Project: JProjectService
   User: JUserService
   Selection: JSelectionService
+  Statistic: JStatisticService
 }
 
 // API SERVICE -> LANGUAGE
@@ -124,6 +125,18 @@ export interface JUserPublicData {
   admin: boolean
 }
 
+export interface JStatisticService {
+  sendCurrentStatistics(options: JStatisticOptions): void
+}
+
+export interface JStatisticOptions {
+  projectOpened: boolean,
+  layersViewed: number[],
+  contextsViewed: number[],
+  success(response: any): void,
+  failure(error: any): void
+}
+
 // API SERVICE -> SELECTION
 export interface JSelectionService {
   getCurrentSelection(): JElementSelection
@@ -132,6 +145,7 @@ export interface JSelectionService {
   clearSelection(): void
   setSelection(association: JElementSelectionWithAttribute[]): Promise<any[]>
   zoomToSelection(elements: any): void
+  initializeElementAttributesPanel(selectedElements: any[]): void
 }
 
 export interface JElementSelection {

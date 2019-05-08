@@ -25,6 +25,7 @@ declare namespace JMAP_API {
       function clearSelection(): void
       function setSelection(association: JElementSelectionWithAttribute[]): Promise<any[]>
       function zoomToSelection(elements: any): void
+      function initializeElementAttributesPanel(selectedElements: any[]) : void
     }
   }
 
@@ -135,6 +136,12 @@ interface JDocumentDescriptor {
   depositId: number
   hasDownloadPermission: boolean
   documentAssociations: JElementSelectionWithAttribute[]
+  metadataList: JDocumentMetadata[]
+}
+
+interface JDocumentMetadata {
+  name: string
+  values: (string | number)[]
 }
 
 interface JDepositDescriptor {

@@ -263,6 +263,13 @@ export interface JDocumentDescriptor {
   depositName: string
   depositId: number
   hasDownloadPermission: boolean
+  documentAssociations: JElementSelectionWithAttribute[]
+  metadataList: JDocumentMetadata[]
+}
+
+export interface JDocumentMetadata {
+  name: string
+  values: (string | number)[]
 }
 
 export interface JHyperLinkDescriptor {

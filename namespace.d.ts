@@ -27,6 +27,11 @@ declare namespace JMAP_API {
       function zoomToSelection(elements: any): void
       function initializeElementAttributesPanel(selectedElements: any[]) : void
     }
+    namespace Statistics {
+      function addProjectOpened(layerIds: number[]): Promise<void>
+      function addLayerViewed(layerId: number): Promise<void>
+      function addContextViewed(contextId: number): Promise<void>
+    }
   }
 
   // JMAP_API.Data : Provide redux store used by api, and also getters to easy access data

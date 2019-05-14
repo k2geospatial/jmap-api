@@ -25,10 +25,17 @@ export interface JAPIData {
   Project: JStoreGetterProject
   User: JStoreGetterUser
   Selection: JStoreGetterSelection
+  Statistics: JStoreGetterStatistics
 }
 
 export interface JStoreGetterProject {
   getId(): string
+}
+
+export interface JStoreGetterStatistics {
+  getOpenedProjects(): number[],
+  getViewedLayers(): number[],
+  getViewedContext(): number[]
 }
 
 export interface JStoreGetterUser {
@@ -47,14 +54,18 @@ export interface JAPIState {
   user: JUserState
   selection: JSelectionState
   form: any
+  statistics: JStatisticsState
   external?: any
 }
+
+// API DATA -> PROJECT
 
 export interface JProjectState {
   id: string
 }
 
 // API DATA -> USER
+
 export interface JUserState {
   identity: JUserIdentity
   sessionId: string
@@ -68,8 +79,17 @@ export interface JUserIdentity {
 }
 
 // API DATA -> SELECTION
+
 export interface JSelectionState {
   current: JElementSelection
+}
+
+// API DATA -> STATISTICS
+
+export interface JStatisticsState {
+  openedProjects: number[]
+  viewedLayers: number[]
+  viewedContexts: number[]
 }
 
 // API APPLICATION
@@ -91,7 +111,7 @@ export interface JAPIService {
   Project: JProjectService
   User: JUserService
   Selection: JSelectionService
-  Statistic: JStatisticService
+  Statistics: JStatisticsService
 }
 
 // API SERVICE -> LANGUAGE
@@ -125,19 +145,16 @@ export interface JUserPublicData {
   admin: boolean
 }
 
-export interface JStatisticService {
-  sendCurrentStatistics(options: JStatisticOptions): void
-}
+// API SERVICE -> STATISTICS
 
-export interface JStatisticOptions {
-  projectOpened: boolean,
-  layersViewed: number[],
-  contextsViewed: number[],
-  success(response: any): void,
-  failure(error: any): void
+export interface JStatisticsService {
+  addProjectOpened(layerIds: number[]): Promise<void>
+  addLayerViewed(layerId: number): Promise<void>
+  addContextViewed(contextId: number): Promise<void>
 }
 
 // API SERVICE -> SELECTION
+
 export interface JSelectionService {
   getCurrentSelection(): JElementSelection
   addSelection(selection: JElementSelection): void

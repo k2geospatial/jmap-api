@@ -97,6 +97,7 @@ declare namespace JMAP_API {
       function filterSearchBasicResult(filterValue: string | undefined): void
       function clearSearchBasicResult(): void
       function launchSearchBasic(): Promise<JDocumentDescriptor[]>
+      function selectSearchBasicDeposit(depositId: number): void
 
       function getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
       function selectSearchAdvancedDepositForm(formId: number): void
@@ -106,6 +107,8 @@ declare namespace JMAP_API {
       function filterSearchAdvancedResult(filterValue: string | undefined): void
       function clearSearchAdvancedResult(): void
       function launchSearchAdvanced(valuesByAttributeName: { [attributeName: string]: any }): void
+      function clearSearchAdvancedFilter(): void
+      function selectSearchAdvancedDeposit(depositId: number): void
     }
   }
 }

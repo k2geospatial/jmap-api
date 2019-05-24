@@ -249,6 +249,7 @@ export interface JDocumentService {
   filterSearchBasicResult(filterValue: string | undefined): void
   clearSearchBasicResult(): void
   launchSearchBasic(): Promise<JDocumentDescriptor[]>
+  selectSearchBasicDeposit(depositId: number): void
 
   getAndSetSearchAdvancedDepositForms(depositId: number): Promise<JFormDescriptor[]>
   selectSearchAdvancedDepositForm(formId: number): void
@@ -257,7 +258,9 @@ export interface JDocumentService {
   setSearchAdvancedOptionElementSelected(selected: boolean): void
   filterSearchAdvancedResult(filterValue: string | undefined): void
   clearSearchAdvancedResult(): void
+  clearSearchAdvancedFilter(): void
   launchSearchAdvanced(valuesByAttributeName: { [attributeName: string]: any }): void
+  selectSearchAdvancedDeposit(depositId: number): void
 
   getRichPreview(websiteUrl: string): void
 }

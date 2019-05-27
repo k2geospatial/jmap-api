@@ -26,6 +26,7 @@ declare namespace JMAP_API {
       function setSelection(association: JElementSelectionWithAttribute[]): Promise<any[]>
       function zoomToSelection(elements: any): void
       function initializeElementAttributesPanel(selectedElements: any[]) : void
+      function clearElementMapSelection(): void
     }
     namespace Statistics {
       function addProjectOpened(layerIds: number[]): Promise<void>

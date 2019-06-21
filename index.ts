@@ -173,6 +173,7 @@ export interface JElementSelection {
 // API COMPONENTS
 export interface JAPIComponent {
   FormFlat: JAPIComponentItem<JFormCmp, JFormProps>
+  PhotoEditor: JAPIComponentItem<JPhotoEditorCmp, JPhotoEditorProps>
 }
 
 // P for react props
@@ -180,6 +181,17 @@ export interface JAPIComponentItem<C extends UIComponent, P> {
   create(containerId: string, props?: P): C
   destroy(containerId: string): void
   getInstance(containerId: string): C
+}
+
+// API COMPONENTS -> PHOTOEDITOR CMP
+export interface JPhotoEditorCmp extends React.Component<JPhotoEditorProps, {}> { }
+export interface JPhotoEditorProps {
+  editMode: boolean
+  title: string
+  comment: string
+  src: string,
+  onSaveCallBack: (values: any) => void,
+  onCloseCallback: () => void
 }
 
 // API COMPONENTS -> FORM CMP

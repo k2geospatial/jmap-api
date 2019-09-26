@@ -29,7 +29,8 @@ export interface JAPIData {
 }
 
 export interface JStoreGetterProject {
-  getId(): string
+  getId(): string,
+  isProjectUsageStatisticsActive(): boolean
 }
 
 export interface JStoreGetterStatistics {
@@ -61,7 +62,8 @@ export interface JAPIState {
 // API DATA -> PROJECT
 
 export interface JProjectState {
-  id: string
+  id: string,
+  usageStatisticsActive: boolean
 }
 
 // API DATA -> USER
@@ -124,6 +126,7 @@ export interface JAPILanguageService {
 // API SERVICE -> PROJECT
 export interface JProjectService {
   setId(projectId: string): void
+  setUsageStatisticActive(isUsageStatisticActive: boolean): void
 }
 
 // API SERVICE -> USER

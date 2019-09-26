@@ -12,6 +12,7 @@ declare namespace JMAP_API {
     }
     namespace Project {
       function setId(projectId: string): void
+      function setUsageStatisticActive(isUsageStatisticActive: boolean): void
     }
     namespace User {
       function setSessionId(sessionId: string): void

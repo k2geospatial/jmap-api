@@ -177,7 +177,7 @@ interface JElementSelection {
 
 interface JElementSelectionWithAttribute {
   attributeName: string
-  layerName: string
+  layerId: number
   elementIds: string[]
 }
 

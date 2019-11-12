@@ -34,6 +34,9 @@ declare namespace JMAP_API {
       function addLayerViewed(layerId: number): Promise<void>
       function addContextViewed(contextId: number): Promise<void>
     }
+    namespace Photos {
+      function getAllPhotos(layerId: number, formId: number, elementId: number, objectId: number, asThumbnail: boolean) : Promise<JPhotoDescriptor[]>
+    }
   }
 
   // JMAP_API.Data : Provide redux store used by api, and also getters to easy access data
@@ -234,6 +237,13 @@ interface JFormDescriptor {
   sections: JFormSection[]
   permissions: { [key: string]: boolean }
   idAttributeName: string | null
+}
+
+interface JPhotoDescriptor {
+  id: number,
+  title: string,
+  comment: string,
+  src: string
 }
 
 interface JFormSection {

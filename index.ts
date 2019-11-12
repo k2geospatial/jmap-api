@@ -56,6 +56,7 @@ export interface JAPIState {
   selection: JSelectionState
   form: any
   statistics: JStatisticsState
+  photos: JPhotosState
   external?: any
 }
 
@@ -94,6 +95,12 @@ export interface JStatisticsState {
   viewedContexts: number[]
 }
 
+// API FORM PHOTO
+
+export interface JPhotosState {
+  allElementPhotos: JPhotoDescriptor[]
+}
+
 // API APPLICATION
 export interface JAPIApplication {
   needToStart(): boolean
@@ -114,6 +121,7 @@ export interface JAPIService {
   User: JUserService
   Selection: JSelectionService
   Statistics: JStatisticsService
+  Photos: JPhotosService
 }
 
 // API SERVICE -> LANGUAGE
@@ -169,6 +177,13 @@ export interface JSelectionService {
   clearElementMapSelection(): void
 }
 
+
+// API SERVICE -> PHOTOS
+
+export interface JPhotosService {
+  getAllPhotos(layerId: number, formId: number, elementId: number, objectId: number, asThumbnail: boolean) : Promise<JPhotoDescriptor[]>
+}
+
 export interface JElementSelection {
   [layerId: number]: number[]
 }
@@ -189,10 +204,15 @@ export interface JAPIComponentItem<C extends UIComponent, P> {
 // API COMPONENTS -> PHOTOEDITOR CMP
 export interface JPhotoEditorCmp extends React.Component<JPhotoEditorProps, {}> { }
 export interface JPhotoEditorProps {
-  editMode: boolean
-  title: string
-  comment: string
+  editMode: boolean,
+  id: number,
+  title: string,
+  comment: string,
   src: string,
+  layerId: number,
+  formId: number,
+  elementId: number,
+  photos: JPhotoDescriptor[],
   onSaveCallBack: (values: any) => void,
   onCloseCallback: () => void
 }
